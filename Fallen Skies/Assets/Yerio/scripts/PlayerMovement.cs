@@ -17,11 +17,19 @@ public class PlayerMovement : MonoBehaviour
     bool hasJumped;
     int timesWallJumped;
     Rigidbody playerRb;
+    bool isOnWall;
+
+    [Header("Crouching")]
+    public float crouchMovement;
+    public float slideForce;
+    bool isCrouching;
+    float currentHeight;
 
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         savedMoveSpeed = moveSpeed;
+        currentHeight = GetComponent<CapsuleCollider>().height;
     }
 
     public void Update()
@@ -37,18 +45,58 @@ public class PlayerMovement : MonoBehaviour
     {
         //the jumping of the player
         Jumping();
+        //crouching of the player
+        Crouching();
+
+        //check if movespeed is normal when not jumping or crouching
+        //if so reset movespeed;
+        if(!isCrouching && !hasJumped && moveSpeed != savedMoveSpeed && !isOnWall)
+        {
+            moveSpeed = savedMoveSpeed;
+        }
+    }
+
+    public void Crouching()
+    {
+        if (Input.GetButtonDown("Crouch"))
+        {
+            isCrouching = true;
+            GetComponent<CapsuleCollider>().height = currentHeight / 2;
+            if (!hasJumped)
+            {
+                moveSpeed /= crouchMovement;
+            }
+            SlidePlayer();
+
+        }
+        if (Input.GetButtonUp("Crouch") && isCrouching)
+        {
+            isCrouching = false;
+            GetComponent<CapsuleCollider>().height = currentHeight;
+        }
+    }
+
+    public void SlidePlayer()
+    {
+        if(isCrouching && moveDir.z > 0 && !hasJumped)
+        {
+            playerRb.AddForce(transform.position + transform.forward * slideForce);
+        }
     }
 
     public void Jumping()
     {
-        if (Input.GetButtonDown("Jump") && !hasJumped)
+        //check if player is crouching
+        //if true lower the jumppower otherwise set it to the saved jumppower
+        //that is to make sure the jumppower is always set back when player isn't crouching anymore;        
+        if (Input.GetButtonDown("Jump") && !hasJumped && !isCrouching)
         {
             hasJumped = true;
-            SlowMovement();
+            SlowMovementWhenJumping();
             if (moveDir.z == 0)
             {
                 //jump up                
-                playerRb.velocity = (new Vector3(0, jumpPower, 0));                
+                playerRb.velocity = (new Vector3(0, jumpPower * 1.5f, 0));
             }
 
             if (moveDir.z > 0)
@@ -58,8 +106,8 @@ public class PlayerMovement : MonoBehaviour
                 //so the faster you're walking the further you jump  
                 //also adds force like a boost jumping forward
                 float extraJump = (moveDir.z * 1f) + jumpPower;
-                playerRb.AddForce(transform.position + transform.forward * 90 * extraJump);
-                playerRb.velocity =new Vector3(0, jumpPower - 1,0);               
+                playerRb.AddForce(transform.position + transform.forward * 100 * extraJump);
+                playerRb.velocity = new Vector3(0, jumpPower - 1, 0);
             }
 
             if (moveDir.z < 0)
@@ -70,7 +118,7 @@ public class PlayerMovement : MonoBehaviour
                 //also adds force like a boost jumping forward
                 float extraJump = (moveDir.z * 1f) + jumpPower;
                 playerRb.AddForce(transform.position - transform.forward * 90 * extraJump);
-                playerRb.velocity = new Vector3(0, jumpPower - 1,0);               
+                playerRb.velocity = new Vector3(0, jumpPower - 1, 0);
             }
 
             if (moveDir.x > 0)
@@ -105,8 +153,8 @@ public class PlayerMovement : MonoBehaviour
         if (other.gameObject.CompareTag("ground"))
         {
             hasJumped = false;
-            moveSpeed = savedMoveSpeed;
             timesWallJumped = 0;
+            isOnWall = false;
         }
 
         if (other.gameObject.CompareTag("jumpableWall"))
@@ -114,19 +162,24 @@ public class PlayerMovement : MonoBehaviour
             if (timesWallJumped < timesThatCanWalljumpInARow)
             {
                 hasJumped = false;
-                SlowMovement();
+                timesWallJumped++;
+                isOnWall = true;
             }
         }
 
         if (other == null)
         {
-            hasJumped = false;
+            hasJumped = false;       
         }
-    }
- 
-    public void SlowMovement()
+
+    } 
+
+    public void SlowMovementWhenJumping()
     {
-        moveSpeed /= 10;
+        if (!isCrouching && moveSpeed == savedMoveSpeed)
+        {
+            moveSpeed /= 7;
+        }
     }
 
 }

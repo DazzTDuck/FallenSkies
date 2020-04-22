@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 1962271225329523903}
   - component: {fileID: 4110857435965111477}
   m_Layer: 0
-  m_Name: Player Collider (1)
+  m_Name: Player Collider
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29,9 +29,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8330285385013786992}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.7001953, y: 9.465088, z: -4.6503906}
-  m_LocalScale: {x: 1, y: 1.4, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -94,7 +94,7 @@ CapsuleCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.5
-  m_Height: 1.9999999
+  m_Height: 2.75
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &2354953415221587078
@@ -113,6 +113,8 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   jumpPower: 4
   timesThatCanWalljumpInARow: 1
+  crouchMovement: 3
+  slideForce: 400
 --- !u!54 &1962271225329523903
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -140,5 +142,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.4293411
-  m_Center: {x: 0, y: -0.6070951, z: 0}
+  m_Radius: 0.6770822
+  m_Center: {x: -0.006459594, y: -0.7409371, z: 0}
