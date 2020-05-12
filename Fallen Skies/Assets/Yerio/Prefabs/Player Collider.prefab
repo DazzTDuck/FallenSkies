@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 2354953415221587078}
   - component: {fileID: 1962271225329523903}
   - component: {fileID: 4110857435965111477}
+  - component: {fileID: 1116984429}
   m_Layer: 0
   m_Name: Player Collider
   m_TagString: Player
@@ -31,7 +32,7 @@ Transform:
   m_GameObject: {fileID: 8330285385013786992}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.7001953, y: 9.465088, z: -4.6503906}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -109,12 +110,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b79f5587ca735444a66aea48d4e4140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 7.5
   moveDir: {x: 0, y: 0, z: 0}
   jumpPower: 4
   timesThatCanWalljumpInARow: 1
   crouchMovement: 3
   slideForce: 400
+  pauseMenu: {fileID: 0}
+  cam: {fileID: 0}
 --- !u!54 &1962271225329523903
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -144,3 +147,19 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.6770822
   m_Center: {x: -0.006459594, y: -0.7409371, z: 0}
+--- !u!114 &1116984429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330285385013786992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2061ae87f9910a24cb882064dcd5d5ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pauseMenu: {fileID: 0}
+  bg: {fileID: 0}
+  isPaused: 0
+  inSettings: 0
