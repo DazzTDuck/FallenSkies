@@ -6,6 +6,13 @@ TagManager:
   tags:
   - ground
   - jumpableWall
+  - note1
+  - note2
+  - note3
+  - note4
+  - convTrigger
+  - convTrigger2
+  - convTrigger3
   layers:
   - Default
   - TransparentFX
