@@ -4,17 +4,38 @@ ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable:
   - first:
+      74: 4819290113445472598
+    second: metarig|Attack animation
+  - first:
+      74: -2443520412549383576
+    second: metarig|Attack animation.001
+  - first:
       74: -887982601649841707
     second: metarig|metarigAction
+  - first:
+      74: 8531330267804024781
+    second: metarig|Walk.Animation
   - first:
       74: -8564241466522685964
     second: rig|Attack animation
   - first:
-      74: -5489073397327795395
-    second: rig|Idle Animation
+      74: 6136840263579973480
+    second: rig|Attack animation.001
+  - first:
+      74: 1440722361474380954
+    second: rig|Idle Animation.001
   - first:
       74: 3516919039181775064
     second: rig|metarigAction
+  - first:
+      74: -8516820110869667766
+    second: rig|THE idle animation
+  - first:
+      74: -7088524228693839972
+    second: rig|THE walking animation
+  - first:
+      74: -655592182858763582
+    second: rig|Walk.Animation
   externalObjects: {}
   materials:
     materialImportMode: 1
