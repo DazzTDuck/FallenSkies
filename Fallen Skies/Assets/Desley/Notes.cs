@@ -9,6 +9,7 @@ public class Notes : MonoBehaviour
     public GameObject[] note;
     public GameObject[] noteButton;
     public GameObject notePanel;
+    public GameObject openText;
 
     public bool[] noteBool;
 
@@ -35,6 +36,7 @@ public class Notes : MonoBehaviour
         {
             notePanel.SetActive(true);
             notePanelOpen = true;
+            openText.SetActive(false);
             cam.GetComponent<CamMove>().sens = 0;
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
@@ -50,21 +52,25 @@ public class Notes : MonoBehaviour
         {
             note[0].SetActive(false);
             noteBool[0] = true;
+            openText.SetActive(true);
         }
         else if(hit.collider.CompareTag("note2"))
         {
             note[1].SetActive(false);
             noteBool[1] = true;
+            openText.SetActive(true);
         }
         else if (hit.collider.CompareTag("note3"))
         {
             note[2].SetActive(false);
             noteBool[2] = true;
+            openText.SetActive(true);
         }
         else if (hit.collider.CompareTag("note4"))
         {
             note[3].SetActive(false);
             noteBool[3] = true;
+            openText.SetActive(true);
         }
     }
 
