@@ -4,28 +4,67 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class SettingsMenu : MonoBehaviour
 {
     public GameObject startMenu;
     public GameObject settingsMenu;
 
-    public AudioMixer masterMixer;
-
-    Resolution[] resolutions;
+    public AudioMixer masterMixer;   
 
     public TMP_Dropdown resolutionDropdown;
 
+    public Slider master;
+    public Slider sfx;
+    public Slider music;
+
+    public Toggle fullscreenToggle;
+
+    public TMP_Dropdown qualityDropdown;
+
     float animationSpeed;
+
+    //values
+    public static float masterVolume = 1f;
+    public static float sfxVolume = 1f;
+    public static float musicVolume = 1f;
+
+    public static bool fullscreen = true;
+
+    public Resolution[] resolutions;
+    public static int resIndexSave;
+
+    public static int qualityIndexSave = 2;
+
 
     private void Start()
     {
         animationSpeed = settingsMenu.GetComponentInChildren<AnimationUI>().AnimationSpeed;
 
         GetResolutions();
+
+
+        SetMasterVolume(masterVolume);
+        master.value = masterVolume;
+
+        SetSFXVolume(sfxVolume);
+        sfx.value = sfxVolume;
+
+        SetMusicVolume(musicVolume);
+        music.value = musicVolume;
+
+        SetQuality(qualityIndexSave);
+        qualityDropdown.value = qualityIndexSave;
+
+        SetResolution(resIndexSave);
+        resolutionDropdown.value = resIndexSave;
+
+        SetFullscreen(fullscreen);
+        fullscreenToggle.isOn = fullscreen;
     }
 
-    public void GetResolutions()
+        public void GetResolutions()
     {
         //get and set the resolutions for the dropdown
         resolutions = Screen.resolutions;
@@ -41,7 +80,7 @@ public class SettingsMenu : MonoBehaviour
             string option = resolutions[i].width + "x" + resolutions[i].height;
             options.Add(option);
 
-            if(resolutions[i].width == Screen.currentResolution.width 
+            if (resolutions[i].width == Screen.currentResolution.width
                 && resolutions[i].height == Screen.currentResolution.height)
             {
                 currentResIndex = i;
@@ -50,6 +89,7 @@ public class SettingsMenu : MonoBehaviour
 
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResIndex;
+        resIndexSave = currentResIndex;
         resolutionDropdown.RefreshShownValue();
     }
 
@@ -57,33 +97,39 @@ public class SettingsMenu : MonoBehaviour
     {
         Resolution res = resolutions[resIndex];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
+        resIndexSave = resIndex;
     }
 
     //control the different volume sliders
     public void SetMasterVolume(float volume)
     {
         masterMixer.SetFloat("MasterValue", Mathf.Log10(volume) * 20);
+        masterVolume = volume;
     }
     public void SetMusicVolume(float volume)
     {
         masterMixer.SetFloat("MusicValue", Mathf.Log10(volume) * 20);
+        musicVolume = volume;
     }
     public void SetSFXVolume(float volume)
     {
         masterMixer.SetFloat("SFXValue", Mathf.Log10(volume) * 20);
+        sfxVolume = volume;
     }
 
     //set the quality of the game
     public void SetQuality(int qualityIndex)
     {
         QualitySettings.SetQualityLevel(qualityIndex);
+        qualityIndexSave = qualityIndex;
     }
 
     //set the fullscreen of the game
     public void SetFullscreen(bool isFullscreen)
     {
         Screen.fullScreen = isFullscreen;
-    }  
+        fullscreen = isFullscreen;
+    }
 
     public void SettingsToMenuTrigger()
     {
@@ -133,6 +179,11 @@ public class SettingsMenu : MonoBehaviour
         foreach (var uiChild in settingsMenu.GetComponentsInChildren<AnimationUI>())
         {
             uiChild.OnButtonPressPlayAnimation();
-        }     
+        }
+    }
+
+    public void LoadMainMenu()
+    {
+        SceneManager.LoadScene(0);
     }
 }

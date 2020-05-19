@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1222722325065379610}
   - component: {fileID: 1222722325065379609}
-  - component: {fileID: 1222722325065379611}
+  - component: {fileID: 2089624192}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -48,7 +48,12 @@ MonoBehaviour:
   settingsMenu: {fileID: 0}
   masterMixer: {fileID: 24100000, guid: 9f8482e0e143c2a44b71b68c6c029d51, type: 2}
   resolutionDropdown: {fileID: 0}
---- !u!114 &1222722325065379611
+  master: {fileID: 0}
+  sfx: {fileID: 0}
+  music: {fileID: 0}
+  fullscreenToggle: {fileID: 0}
+  qualityDropdown: {fileID: 0}
+--- !u!114 &2089624192
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -57,21 +62,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1222722325065379608}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9843c70d4d737b44bb462eaef4e9c987, type: 3}
+  m_Script: {fileID: 11500000, guid: d3ce2fa2d9f7cd745bb5347bb5df9abf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sounds:
-  - name: PlayerJump
-    clip: {fileID: 8300000, guid: 2271bb6ffe2f4274ba791f70df8aec14, type: 3}
-    mixer: {fileID: 2181006861063554747, guid: 9f8482e0e143c2a44b71b68c6c029d51, type: 2}
-    volume: 0.15
-    pitch: 0.84
-    loop: 0
-    source: {fileID: 0}
-  - name: BackgroundMusic
-    clip: {fileID: 8300000, guid: ad1ce38fda1aa0e4a854e22caf7ef9bf, type: 3}
-    mixer: {fileID: 3205953359065116661, guid: 9f8482e0e143c2a44b71b68c6c029d51, type: 2}
-    volume: 0.14
-    pitch: 1
-    loop: 1
-    source: {fileID: 0}

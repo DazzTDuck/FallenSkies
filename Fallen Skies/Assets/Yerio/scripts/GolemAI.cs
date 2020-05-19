@@ -18,6 +18,7 @@ public class GolemAI : MonoBehaviour
     float currentMoveSpeed;
     float sprintSpeed;
     bool foundPlayer;
+    bool isSearching;
 
     private void OnDrawGizmosSelected()
     {
@@ -51,6 +52,7 @@ public class GolemAI : MonoBehaviour
         PatrolChoose();
         currentMoveSpeed = GetComponent<NavMeshAgent>().speed;
          sprintSpeed = GetComponent<NavMeshAgent>().speed * 2.5f;
+        isSearching = false;
     }
     private void Update()
     {
@@ -124,6 +126,15 @@ public class GolemAI : MonoBehaviour
                 //transform.LookAt(player.position);
                 //transform.position = Vector3.MoveTowards(transform.position, player.position, GetComponent<NavMeshAgent>().speed * Time.deltaTime);
                 GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
+                if (!isSearching)
+                {
+                    GetComponent<Animator>().SetTrigger("Walk");
+                }                    
+               
+                if(GetComponent<Animator>().speed < 1.5f)
+                {
+                    GetComponent<Animator>().speed += 0.5f;                
+                }             
             }
 
             //if on same place as player but what i want is to do if it is in damage range of the enemy do damage
@@ -137,8 +148,17 @@ public class GolemAI : MonoBehaviour
             //transform.LookAt(currentPosToMove);
             //transform.position = Vector3.MoveTowards(transform.position, currentPosToMove, GetComponent<NavMeshAgent>().speed * Time.deltaTime);
             GetComponent<NavMeshAgent>().SetDestination(currentPosToMove);
+            if (!isSearching)
+            {
+                GetComponent<Animator>().SetTrigger("Walk");
+            }            
 
-            if (GetComponent<NavMeshAgent>().remainingDistance == 0f)
+            if(GetComponent<Animator>().speed > 1)
+            {
+                GetComponent<Animator>().speed -= 0.5f;
+            }       
+             
+            if (GetComponent<NavMeshAgent>().remainingDistance < 1.6f)
             {
                 PatrolChoose();                            
             }
@@ -150,34 +170,39 @@ public class GolemAI : MonoBehaviour
         if (!isInFov)
         {
             GetComponent<NavMeshAgent>().speed = 0;
-            foundPlayer = false;
+            isSearching = true;
+            GetComponent<Animator>().ResetTrigger("Walk");
+            GetComponent<Animator>().SetTrigger("Idle");
+            foundPlayer = false;          
+
             yield return new WaitForSeconds(1);
+
 
             if (isInFov)
             {
                 Debug.Log("found player again");
                 foundPlayer = true;
-                //call search Animation
+                isSearching = false;
                 GetComponent<NavMeshAgent>().speed = currentMoveSpeed;
                 StopCoroutine("SearchForPlayer");
             }
             else
             {
                 Debug.Log("searching");
-                //call search Animation
                 if (isInFov)
                 {
                     Debug.Log("found player again");
                     foundPlayer = true;
-                    //call search Animation
+                    isSearching = false;
                     GetComponent<NavMeshAgent>().speed = currentMoveSpeed;
                     StopCoroutine("SearchForPlayer");
                 }
-                yield return new WaitForSeconds(5);
+                yield return new WaitForSeconds(4.5f);
 
                 GetComponent<NavMeshAgent>().speed = currentMoveSpeed;
                 PatrolChoose();
                 Debug.Log("not found");
+                isSearching = false;
                 StopCoroutine("SearchForPlayer");
             }
         }

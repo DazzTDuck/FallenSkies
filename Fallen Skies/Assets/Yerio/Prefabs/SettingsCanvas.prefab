@@ -1957,7 +1957,6 @@ GameObject:
   - component: {fileID: 8630508699793691499}
   - component: {fileID: 8630508699793691500}
   - component: {fileID: 8630508699793691501}
-  - component: {fileID: 1706966721}
   m_Layer: 5
   m_Name: Button (2)
   m_TagString: Untagged
@@ -2075,32 +2074,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &1706966721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8630508699793691503}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6100cdbac77afe947bf330281d8daf30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Menu: {fileID: 0}
-  activeBG: 0
-  settingsBG: {fileID: 0}
-  AnimationSpeed: 0.5
-  AnimaitonOnStart: 0
-  scale: 0
-  scaleX: 0
-  scaleY: 0
-  dropLogo: 0
-  closeScale: 0
-  closeLogo: 0
-  tweenTypeIn: 0
-  tweenTypeOut: 0
-  isTweening: 0
+      - m_Target: {fileID: 0}
+        m_MethodName: SettingsOff
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8630508699817220321
 GameObject:
   m_ObjectHideFlags: 0
@@ -3787,7 +3771,7 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 8630508699266454952}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 3
   m_Options:
     m_Options:
     - m_Text: Low

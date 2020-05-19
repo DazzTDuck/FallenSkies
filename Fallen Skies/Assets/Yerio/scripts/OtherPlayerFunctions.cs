@@ -28,6 +28,10 @@ public class OtherPlayerFunctions : MonoBehaviour
         {
             Unpause();
         }
+
+        //teleport button 
+        if(Input.GetKeyDown(KeyCode.T))
+        transform.position = GameObject.FindGameObjectWithTag("TeleportPoint").transform.position;
     }
 
     public void Pause()

@@ -23,8 +23,13 @@ public class PlayerMovement : MonoBehaviour
     [Header("Crouching")]
     public float crouchMovement;
     public float slideForce;
-    bool isCrouching;
+    [HideInInspector]
+    public bool isCrouching;
     float currentHeight;
+
+    [Header("Player Walking")]
+    public float stepDistance;
+    float walkTimer = 0f;
 
     public GameObject pauseMenu;
 
@@ -32,6 +37,7 @@ public class PlayerMovement : MonoBehaviour
 
     float timeInAir;
     bool isInAir;
+    float timer = 0f;
     private void Start()
     {
         playerRb = GetComponent<Rigidbody>();
@@ -53,7 +59,19 @@ public class PlayerMovement : MonoBehaviour
 
         //air time
         if(isInAir)
-        timeInAir += Time.deltaTime;
+        timeInAir += Time.fixedDeltaTime;
+
+        //step sounds
+        if (!hasJumped && !isInAir)
+          walkTimer += Time.fixedDeltaTime;
+
+
+        if (walkTimer > stepDistance && moveDir.sqrMagnitude > 0 && !GetComponent<OtherPlayerFunctions>().isPaused && !isCrouching)
+        {
+            FindObjectOfType<AudioManager>().PlaySound("Footstep");
+            walkTimer = 0f;
+        }
+
     }
 
     private void LateUpdate()
@@ -78,18 +96,26 @@ public class PlayerMovement : MonoBehaviour
             if (Input.GetButtonDown("Crouch"))
             {
                 isCrouching = true;
-                GetComponent<CapsuleCollider>().height = currentHeight / 2;
+                GetComponent<CapsuleCollider>().height = currentHeight / 1.5f;
+                cam.GetComponent<CamMove>().camOffset.y -= 0.2f;
                 if (!hasJumped)
                 {
                     moveSpeed /= crouchMovement;
                 }
                 SlidePlayer();
 
+                //make AI radius Smaller
+                if (FindObjectOfType<GolemAI>())
+                    FindObjectOfType<GolemAI>().maxRadius /= 1.5f;
+
             }
             if (Input.GetButtonUp("Crouch") && isCrouching)
             {
                 isCrouching = false;
                 GetComponent<CapsuleCollider>().height = currentHeight;
+                cam.GetComponent<CamMove>().camOffset.y += 0.2f;
+                if (FindObjectOfType<GolemAI>())
+                    FindObjectOfType<GolemAI>().maxRadius *= 1.5f;
             }
         }    
     }
@@ -129,8 +155,8 @@ public class PlayerMovement : MonoBehaviour
                     //so the faster you're walking the further you jump  
                     //also adds force like a boost jumping forward
                     float extraJump = (moveDir.z * 1f) + jumpPower;
-                    playerRb.AddForce(transform.position + transform.forward * 40 * extraJump);
-                    playerRb.velocity = new Vector3(0, jumpPower - 1, 0);
+                    playerRb.AddForce(transform.position + transform.forward * 60 * extraJump);
+                    playerRb.velocity = new Vector3(0, jumpPower + 1, 0);
                 }
 
                 if (moveDir.z < 0)
@@ -139,8 +165,8 @@ public class PlayerMovement : MonoBehaviour
                     //add the input to the jump calculation to determine the speed of the jump
                     //so the faster you're walking the further you jump 
                     //also adds force like a boost jumping forward
-                    float extraJump = (moveDir.z * 1f) + jumpPower;
-                    playerRb.AddForce(transform.position - transform.forward * 30 * extraJump);
+                    float extraJump = (moveDir.z * 0.5f) + jumpPower;
+                    playerRb.AddForce(transform.position - transform.forward * 40 * extraJump);
                     playerRb.velocity = new Vector3(0, jumpPower - 1, 0);
                 }
 
@@ -150,8 +176,8 @@ public class PlayerMovement : MonoBehaviour
                     //add the input to the jump calculation to determine the speed of the jump
                     //so the faster you're walking the further you jump  
                     //also adds force like a boost jumping forward
-                    float extraJump = (moveDir.x * 1f) + jumpPower;
-                    playerRb.AddForce(transform.position + transform.right * 30 * extraJump);
+                    float extraJump = (moveDir.x * 0.5f) + jumpPower;
+                    playerRb.AddForce(transform.position + transform.right * 40 * extraJump);
                     playerRb.velocity = new Vector3(0, jumpPower - 1, 0);
                 }
 
@@ -161,8 +187,8 @@ public class PlayerMovement : MonoBehaviour
                     //add the input to the jump calculation to determine the speed of the jump
                     //so the faster you're walking the further you jump
                     //also adds force like a boost jumping forward
-                    float extraJump = (moveDir.x * 1f) + jumpPower;
-                    playerRb.AddForce(transform.position - transform.right * 30 * extraJump);
+                    float extraJump = (moveDir.x * 0.5f) + jumpPower;
+                    playerRb.AddForce(transform.position - transform.right * 40 * extraJump);
                     playerRb.velocity = new Vector3(0, jumpPower - 1, 0);
                 }
             }
@@ -217,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (other == null)
         {                      
-            hasJumped = false;
+            //hasJumped = false;
             if (hasTurned)
             {
                 cam.GetComponent<CamMove>().TurnCamZBack();
@@ -231,8 +257,13 @@ public class PlayerMovement : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("ground"))
-        {
-            hasJumped = false;
+        {          
+            timer += Time.deltaTime;
+            if(timer > 0.2f && !cam.GetComponent<CamMove>().GetIfLanding())
+            {
+                hasJumped = false;
+                timer = 0f;
+            }
         }
     }
 

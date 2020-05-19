@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4781165909889639577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6310832071775227173}
+  - component: {fileID: 5903703170109867337}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6310832071775227173
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4781165909889639577}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 197.1482, y: 278.5515, z: -273.2374}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5903703170109867337
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4781165909889639577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9843c70d4d737b44bb462eaef4e9c987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: PlayerJump
+    clip: {fileID: 8300000, guid: 2271bb6ffe2f4274ba791f70df8aec14, type: 3}
+    mixer: {fileID: 2181006861063554747, guid: 9f8482e0e143c2a44b71b68c6c029d51, type: 2}
+    volume: 0.15
+    pitch: 0.84
+    loop: 0
+    source: {fileID: 0}
+  - name: BackgroundMusic
+    clip: {fileID: 8300000, guid: ad1ce38fda1aa0e4a854e22caf7ef9bf, type: 3}
+    mixer: {fileID: 3205953359065116661, guid: 9f8482e0e143c2a44b71b68c6c029d51, type: 2}
+    volume: 0.14
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Footstep
+    clip: {fileID: 8300000, guid: 0794f51144a742d4186f9c8ef3cd518b, type: 3}
+    mixer: {fileID: 2181006861063554747, guid: 9f8482e0e143c2a44b71b68c6c029d51, type: 2}
+    volume: 0.113
+    pitch: 0.94
+    loop: 0
+    source: {fileID: 0}

@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SocialPlatforms;
 
 public class AudioManager : MonoBehaviour
 {
     public Sound[] sounds;
+
+    public bool awakeBGMusic;
 
     public static AudioManager instance;
     private void Awake()
@@ -25,6 +28,7 @@ public class AudioManager : MonoBehaviour
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.outputAudioMixerGroup = s.mixer;
+
             s.source.clip = s.clip;
 
             s.source.volume = s.volume;
@@ -32,13 +36,14 @@ public class AudioManager : MonoBehaviour
 
             s.source.loop = s.loop;
 
-        }       
+        }     
     }
 
     private void Start()
     {
         //main menu music
-        //PlaySound("BackgroundMusic");
+        if(awakeBGMusic)
+        PlaySound("BackgroundMusic");
     }
 
     public void PlaySound(string name)
@@ -49,7 +54,7 @@ public class AudioManager : MonoBehaviour
             Debug.LogWarning(name + "not found");
             return;
         }
-        
+
         s.source.Play();
 
         if (s.clip == null)

@@ -114,8 +114,10 @@ MonoBehaviour:
   moveDir: {x: 0, y: 0, z: 0}
   jumpPower: 4
   timesThatCanWalljumpInARow: 1
-  crouchMovement: 3
-  slideForce: 400
+  crouchMovement: 4
+  slideForce: 350
+  isCrouching: 0
+  stepDistance: 0.48
   pauseMenu: {fileID: 0}
   cam: {fileID: 0}
 --- !u!54 &1962271225329523903
@@ -145,8 +147,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.6770822
-  m_Center: {x: -0.006459594, y: -0.7409371, z: 0}
+  m_Radius: 0.69112134
+  m_Center: {x: -0.004118383, y: -0.7329695, z: -0.014190525}
 --- !u!114 &1116984429
 MonoBehaviour:
   m_ObjectHideFlags: 0

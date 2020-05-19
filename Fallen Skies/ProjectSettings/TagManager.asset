@@ -15,6 +15,7 @@ TagManager:
   - convTrigger3
   - key
   - portalCollider
+  - TeleportPoint
   layers:
   - Default
   - TransparentFX
