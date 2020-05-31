@@ -164,6 +164,12 @@ public class CamMove : MonoBehaviour
             timer += Time.deltaTime * speed;
         }
         transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(timer) * amount, player.transform.position.z);
+
+        if (GameObject.FindGameObjectWithTag("Radio"))
+        {
+            var radio = GetComponentInChildren<RadioBobbing>();
+            radio.BobbingOnRadio();
+        }
     }
 
     void CallLanding()
