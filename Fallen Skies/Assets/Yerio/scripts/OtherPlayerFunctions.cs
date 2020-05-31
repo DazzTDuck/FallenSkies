@@ -12,6 +12,12 @@ public class OtherPlayerFunctions : MonoBehaviour
     //[HideInInspector]
     public bool inSettings;
 
+    //health
+    public Slider healthBar;
+    public static float health = 100f;
+
+    public static Transform checkpoint;
+   
     private void Awake()
     {
         isPaused = false;
@@ -28,10 +34,6 @@ public class OtherPlayerFunctions : MonoBehaviour
         {
             Unpause();
         }
-
-        //teleport button 
-        if(Input.GetKeyDown(KeyCode.T))
-        transform.position = GameObject.FindGameObjectWithTag("TeleportPoint").transform.position;
     }
 
     public void Pause()
@@ -56,17 +58,7 @@ public class OtherPlayerFunctions : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel") && !inSettings)
         {
-            bg.SetActive(false);
-            //get rid of pause menu and set time normal again
-            isPaused = false;
-            //cursor hidden
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            //play UI animaiton
-            foreach (var uiChild in pauseMenu.GetComponentsInChildren<AnimationUI>())
-            {
-                uiChild.OnCloseAnimation();
-            }
+            UnpauseUI();
         }
     }
 
@@ -78,12 +70,39 @@ public class OtherPlayerFunctions : MonoBehaviour
         isPaused = false;
         //cursor hidden
         Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.Locked;       
         //play UI animaiton
         foreach (var uiChild in pauseMenu.GetComponentsInChildren<AnimationUI>())
         {
             uiChild.OnCloseAnimation();
         }
+    }
+
+    public void UpdateHealthBar()
+    {
+        healthBar.value = health;
+    }
+
+    public void DoDamage(float amount)
+    {
+        if(health - amount <= 0f)
+        {
+            //reset player
+            health = 100f;
+            if (checkpoint != null)
+                transform.position = checkpoint.position;
+            FindObjectOfType<GolemAI>().ResetFOV();
+        }
+        else
+        {
+            health -= amount;
+        }
+        UpdateHealthBar();
+    }
+
+    public void SetCheckpoint(Transform refernce)
+    {
+        checkpoint = refernce;
     }
 
     public void SettingsOn()

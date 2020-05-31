@@ -47,7 +47,7 @@ public class AnimationUI : MonoBehaviour
     }
     public void DropLogo()
     {
-        LeanTween.moveY(gameObject, 390f, AnimationSpeed).setEase(tweenTypeIn).setOnStart(ShowMenu);
+        LeanTween.moveLocalY(gameObject, 650f, AnimationSpeed).setEase(tweenTypeIn).setOnStart(ShowMenu);
     }
 
     //for buttons
@@ -57,7 +57,7 @@ public class AnimationUI : MonoBehaviour
     }
     public void OnCloseLogoUp()
     {
-        LeanTween.moveY(gameObject, 587f, AnimationSpeed).setEase(tweenTypeOut).setOnComplete(HideMenu);
+        LeanTween.moveLocalY(gameObject, 1500f, AnimationSpeed).setEase(tweenTypeOut).setOnComplete(HideMenu);
     }
 
     public void OnCloseAnimation()

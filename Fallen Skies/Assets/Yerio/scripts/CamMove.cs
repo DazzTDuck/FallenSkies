@@ -18,8 +18,6 @@ public class CamMove : MonoBehaviour
     public float maxY = 45f;
     public float minY = -55f;
 
-    bool canMoveCam;
-
     public GameObject pauseMenu;
 
     bool turnZRight;
@@ -33,6 +31,10 @@ public class CamMove : MonoBehaviour
     public float crouchingBobbingSpeed = 10f;
     public float bobbingAmountCrouch = 0.02f;
 
+    public float landingSpeed = 10f;
+    public float landingAmount = .05f;
+    
+
     float timer = 0;
 
     void Start()
@@ -40,92 +42,103 @@ public class CamMove : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        canMoveCam = true;
         getIfLanding = false;
     }
     private void Update()
     {
-        if (!pauseMenu.GetComponentInChildren<AnimationUI>().isTweening && canMoveCam && !player.GetComponent<OtherPlayerFunctions>().isPaused)
+        GetMouseInput();
+
+        WallStepping();
+
+        MouseMovement();
+
+        if (!player.GetComponent<OtherPlayerFunctions>().isPaused)
         {
-            currentX -= Input.GetAxis("Mouse Y") * sens;
-            currentY += Input.GetAxis("Mouse X") * sens;
-            //wallrunning
-            if (turnZRight)
+            if(Mathf.Abs(player.GetComponent<PlayerMovement>().moveDir.x) > 0.01f 
+                || Mathf.Abs(player.GetComponent<PlayerMovement>().moveDir.z) > 0.01f)
             {
-                float add2 = 1;
-                currentZ = Mathf.Clamp(currentZ, 0, 10);
-                currentZ += add2;
-            }
-
-            if (turnZLeft)
-            {
-                float add = 1f;
-                currentZ = Mathf.Clamp(currentZ, -10, 0);
-                currentZ -= add;
-            }
-            //cam rotations and player rotations
-            currentX = Mathf.Clamp(currentX, minY, maxY);
-            Quaternion rot = Quaternion.Euler(currentX, currentY, currentZ);
-            Quaternion rotPlayer = Quaternion.Euler(0, currentY, 0);
-            Camera.main.transform.rotation = rot;
-            player.transform.rotation = rotPlayer;
-
-            //head bobbing and setting camera on the player
-            if (Mathf.Abs(player.GetComponent<PlayerMovement>().moveDir.x) > 0.01f || Mathf.Abs(player.GetComponent<PlayerMovement>().moveDir.z) > 0.01f)
-            {
-                //Player is moving
-                
-                if(player.GetComponent<PlayerMovement>().isCrouching)
+                if (player.GetComponent<PlayerMovement>().isCrouching)
                 {
-                    timer += Time.deltaTime * crouchingBobbingSpeed;
-                    transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(timer) * bobbingAmountCrouch, player.transform.position.z);
+                    HeadBobbing(crouchingBobbingSpeed, bobbingAmountCrouch, false);
                 }
                 else
                 {
-                    timer += Time.deltaTime * walkingBobbingSpeed;
-                    transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(timer) * bobbingAmount, player.transform.position.z);
+                    HeadBobbing(walkingBobbingSpeed, bobbingAmount, false);
                 }
             }
             else
             {
-               transform.position = player.transform.position;
-               transform.position += camOffset;
-            }                   
-
-            if (turnZBack)
-            {
-                float subract = 0.7f;
-                if (currentZ > 0)
-                {
-                    currentZ -= subract;
-
-                    if (currentZ <= 0)
-                    {
-                        turnZBack = false;
-                        currentZ = 0;
-                    }
-                }
-                if (currentZ < 0)
-                {
-                    currentZ += subract;
-
-                    if (currentZ >= 0)
-                    {
-                        turnZBack = false;
-                        currentZ = 0;
-                    }
-                }
-
+                SetCameraToPlayer();
             }
         }
+
+        CallLanding();
+
+        CurrentZBackToNormal();
     }
-    public void CanMoveMouse()
+
+    void GetMouseInput()
     {
-        canMoveCam = true;
+        if (!player.GetComponent<OtherPlayerFunctions>().isPaused && !pauseMenu.GetComponentInChildren<AnimationUI>().isTweening)
+        {
+            currentX -= Input.GetAxis("Mouse Y") * sens;
+            currentY += Input.GetAxis("Mouse X") * sens;
+        }
     }
-    public void CantMoveMouse()
+
+    void MouseMovement()
     {
-        canMoveCam = false;
+        //cam rotations and player rotations
+        currentX = Mathf.Clamp(currentX, minY, maxY);
+        Quaternion rot = Quaternion.Euler(currentX, currentY, currentZ);
+        Quaternion rotPlayer = Quaternion.Euler(0, currentY, 0);
+        Camera.main.transform.rotation = rot;
+        player.transform.rotation = rotPlayer;
+    }
+
+    void WallStepping()
+    {
+        if (turnZRight)
+        {
+            float add2 = .9f;
+            currentZ = Mathf.Clamp(currentZ, 0, 10);
+            currentZ += add2;
+        }
+
+        if (turnZLeft)
+        {
+            float add = .9f;
+            currentZ = Mathf.Clamp(currentZ, -10, 0);
+            currentZ -= add;
+        }
+    }
+
+    void CurrentZBackToNormal()
+    {
+        if (turnZBack)
+        {
+            float subract = 0.3f;
+            if (currentZ > 0)
+            {
+                currentZ -= subract;
+
+                if (currentZ <= 0)
+                {
+                    turnZBack = false;
+                    currentZ = 0;
+                }
+            }
+            if (currentZ < 0)
+            {
+                currentZ += subract;
+
+                if (currentZ >= 0)
+                {
+                    turnZBack = false;
+                    currentZ = 0;
+                }
+            }
+        }
     }
 
     public void TurnCamZ(bool right, bool left)
@@ -140,23 +153,45 @@ public class CamMove : MonoBehaviour
         turnZBack = true;
     }
 
+    public void HeadBobbing(float speed, float amount, bool inverted)
+    {
+        if (inverted)
+        {
+            timer -= Time.deltaTime * speed;
+        }
+        else
+        {
+            timer += Time.deltaTime * speed;
+        }
+        transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(timer) * amount, player.transform.position.z);
+    }
+
+    void CallLanding()
+    {
+        if (getIfLanding)
+        {
+            HeadBobbing(landingSpeed, landingAmount, true);
+        }
+    }
+
+    void SetCameraToPlayer()
+    {
+        //when not moving set pos of the camera on the player
+        transform.position = player.transform.position;
+        transform.position += camOffset;
+    }
+
     public void CameraLandingBounceTrigger()
     {
-        StartCoroutine("Landing");
+        StartCoroutine("Landing");        
     }
 
     public IEnumerator Landing()
     {
-        float saveY = gameObject.transform.position.y;
+        timer = 0f;
         getIfLanding = true;
-
-        LeanTween.moveLocalY(gameObject, saveY - .2f, 0.2f).setEaseOutBack();
-
-        yield return new WaitForSeconds(0.15f);
-
-        LeanTween.moveLocalY(gameObject, saveY, 0.2f).setEaseLinear();
-
-        yield return new WaitForSeconds(0.21f);
+        
+        yield return new WaitForSeconds(0.38f);
 
         player.GetComponent<PlayerMovement>().HasJumped(false);
         getIfLanding = false;

@@ -12,12 +12,19 @@ public class MainMenuButtons : MonoBehaviour
             case 0:
                 //start
                 //load starting level
-                SceneManager.LoadScene(1);
+                StartCoroutine("LoadingSceneStartLevel");
                 break;
             case 1:
                 //quit
                 Application.Quit();
                 break;
         }
+    }
+
+    IEnumerator LoadingSceneStartLevel()
+    {
+        yield return new WaitForSeconds(1f);
+
+        SceneManager.LoadScene(1);
     }
 }

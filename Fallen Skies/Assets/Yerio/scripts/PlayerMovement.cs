@@ -47,23 +47,19 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void FixedUpdate()
-    {
-        //movement
-        //moveDir is where the direction is determined, by which key you press and the movement speed
-        //transform.Translate makes it that the player moves
-        if (!GetComponent<OtherPlayerFunctions>().isPaused && !pauseMenu.GetComponentInChildren<AnimationUI>().isTweening)
-        {
-            moveDir = new Vector3(Input.GetAxis("Horizontal") * Time.fixedDeltaTime * moveSpeed, 0, Input.GetAxis("Vertical") * Time.fixedDeltaTime * moveSpeed);
-            transform.Translate(moveDir);
-        }
+    {       
+        MovePlayer();
+    }
 
-        //air time
-        if(isInAir)
-        timeInAir += Time.fixedDeltaTime;
+    private void Update()
+    {
+        //times the air time
+        if (isInAir)
+            timeInAir += Time.deltaTime;
 
         //step sounds
         if (!hasJumped && !isInAir)
-          walkTimer += Time.fixedDeltaTime;
+            walkTimer += Time.deltaTime;
 
 
         if (walkTimer > stepDistance && moveDir.sqrMagnitude > 0 && !GetComponent<OtherPlayerFunctions>().isPaused && !isCrouching)
@@ -72,10 +68,6 @@ public class PlayerMovement : MonoBehaviour
             walkTimer = 0f;
         }
 
-    }
-
-    private void LateUpdate()
-    {
         //the jumping of the player
         Jumping();
         //crouching of the player
@@ -83,9 +75,22 @@ public class PlayerMovement : MonoBehaviour
 
         //check if movespeed is normal when not jumping or crouching
         //if so reset movespeed;
-        if(!isCrouching && !hasJumped && moveSpeed != savedMoveSpeed && !isOnWall)
+        if (!isCrouching && !hasJumped && moveSpeed != savedMoveSpeed && !isOnWall)
         {
             moveSpeed = savedMoveSpeed;
+        }
+
+    }
+
+    void MovePlayer()
+    {
+        //movement
+        //moveDir is where the direction is determined, by which key you press and the movement speed
+        //transform.Translate makes it that the player moves
+        if (!GetComponent<OtherPlayerFunctions>().isPaused && !pauseMenu.GetComponentInChildren<AnimationUI>().isTweening)
+        {
+            moveDir = new Vector3(Input.GetAxis("Horizontal") * Time.fixedDeltaTime * moveSpeed, 0, Input.GetAxis("Vertical") * Time.fixedDeltaTime * moveSpeed);
+            transform.Translate(moveDir);
         }
     }
 
@@ -106,7 +111,11 @@ public class PlayerMovement : MonoBehaviour
 
                 //make AI radius Smaller
                 if (FindObjectOfType<GolemAI>())
+                {
+                    if(!FindObjectOfType<GolemAI>().foundPlayer)
                     FindObjectOfType<GolemAI>().maxRadius /= 1.5f;
+                }
+                    
 
             }
             if (Input.GetButtonUp("Crouch") && isCrouching)
@@ -115,7 +124,10 @@ public class PlayerMovement : MonoBehaviour
                 GetComponent<CapsuleCollider>().height = currentHeight;
                 cam.GetComponent<CamMove>().camOffset.y += 0.2f;
                 if (FindObjectOfType<GolemAI>())
-                    FindObjectOfType<GolemAI>().maxRadius *= 1.5f;
+                {
+                    if(FindObjectOfType<GolemAI>().savedRadius > FindObjectOfType<GolemAI>().maxRadius)
+                        FindObjectOfType<GolemAI>().maxRadius *= 1.5f;
+                }
             }
         }    
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,7 +10,9 @@ public class GolemAI : MonoBehaviour
     public GameObject player;
     public float maxAngle;
     public float maxRadius;
-    private bool isInFov = false;
+    [HideInInspector]
+    public float savedRadius;
+    bool isInFov = false;
 
     //Patrol
     public List<GameObject> patrolSpots = new List<GameObject>();
@@ -17,8 +20,21 @@ public class GolemAI : MonoBehaviour
     Vector3 currentPosToMove;
     float currentMoveSpeed;
     float sprintSpeed;
-    bool foundPlayer;
-    bool isSearching;
+    [HideInInspector]
+    public bool foundPlayer;
+    [HideInInspector]
+    public bool isSearching;
+
+    [Header("Attack")]
+    public float damage;
+    public float damageDelay;
+    public Transform attackPoint;
+    public float attackRad;
+    float damageTimer;
+
+    float animationSpeed;
+
+    int playerIndex;
 
     private void OnDrawGizmosSelected()
     {
@@ -45,6 +61,9 @@ public class GolemAI : MonoBehaviour
 
         Gizmos.color = Color.black;
         Gizmos.DrawRay(transform.position, transform.forward * maxRadius);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(attackPoint.position, attackRad);
     }
 
     private void Start()
@@ -52,7 +71,9 @@ public class GolemAI : MonoBehaviour
         PatrolChoose();
         currentMoveSpeed = GetComponent<NavMeshAgent>().speed;
          sprintSpeed = GetComponent<NavMeshAgent>().speed * 2.5f;
+        animationSpeed = GetComponent<Animator>().speed;
         isSearching = false;
+        savedRadius = maxRadius;
     }
     private void Update()
     {
@@ -72,6 +93,10 @@ public class GolemAI : MonoBehaviour
         {
             StartCoroutine("SearchForPlayer");
         }
+
+        CheckAttackRad();
+
+        CheckIfGamePaused();
     }
 
     //player detection
@@ -121,10 +146,8 @@ public class GolemAI : MonoBehaviour
     {
         if (foundPlayer)
         {   
-            if(GetComponent<NavMeshAgent>().speed != 0)
+            if(GetComponent<NavMeshAgent>().speed != 0 && !player.GetComponent<OtherPlayerFunctions>().isPaused)
             {
-                //transform.LookAt(player.position);
-                //transform.position = Vector3.MoveTowards(transform.position, player.position, GetComponent<NavMeshAgent>().speed * Time.deltaTime);
                 GetComponent<NavMeshAgent>().SetDestination(player.transform.position);
                 if (!isSearching)
                 {
@@ -136,31 +159,60 @@ public class GolemAI : MonoBehaviour
                     GetComponent<Animator>().speed += 0.5f;                
                 }             
             }
-
-            //if on same place as player but what i want is to do if it is in damage range of the enemy do damage
-            if (transform.position == player.transform.position)
-            {
-                Debug.Log("Do Damage");
-            }
+           
         }
         else
         {
-            //transform.LookAt(currentPosToMove);
-            //transform.position = Vector3.MoveTowards(transform.position, currentPosToMove, GetComponent<NavMeshAgent>().speed * Time.deltaTime);
-            GetComponent<NavMeshAgent>().SetDestination(currentPosToMove);
-            if (!isSearching)
+            if (!player.GetComponent<OtherPlayerFunctions>().isPaused)
             {
-                GetComponent<Animator>().SetTrigger("Walk");
-            }            
+                GetComponent<NavMeshAgent>().SetDestination(currentPosToMove);
+                if (!isSearching)
+                {
+                    GetComponent<Animator>().SetTrigger("Walk");
+                }
 
-            if(GetComponent<Animator>().speed > 1)
+                if (GetComponent<Animator>().speed > 1)
+                {
+                    GetComponent<Animator>().speed -= 0.5f;
+                }
+
+                if (GetComponent<NavMeshAgent>().remainingDistance < 1.6f)
+                {
+                    PatrolChoose();
+                }
+            }           
+        }
+    }
+
+    void CheckAttackRad()
+    {
+        Collider[] coll = Physics.OverlapSphere(attackPoint.position, attackRad);
+
+        for (int i = 0; i < coll.Length; i++)
+        {
+            if (coll[i].CompareTag("Player"))
             {
-                GetComponent<Animator>().speed -= 0.5f;
-            }       
-             
-            if (GetComponent<NavMeshAgent>().remainingDistance < 1.6f)
+                playerIndex = i;
+                if (!player.GetComponent<OtherPlayerFunctions>().isPaused)
+                {
+                    damageTimer += Time.deltaTime;
+                    //do damage to the player and slow down the golem
+                    GetComponent<NavMeshAgent>().speed /= 2f;
+                    GetComponent<Animator>().speed /= 1.3f;
+                    if (damageTimer > damageDelay)
+                    {
+                        coll[playerIndex].GetComponent<OtherPlayerFunctions>().DoDamage(damage);
+                        damageTimer = 0f;
+                    }
+                }              
+            }
+
+            if (playerIndex > coll.Length && !isSearching)
             {
-                PatrolChoose();                            
+                if (GetComponent<NavMeshAgent>().speed != currentMoveSpeed)
+                    GetComponent<NavMeshAgent>().speed = currentMoveSpeed;
+                if (GetComponent<Animator>().speed != animationSpeed)
+                    GetComponent<Animator>().speed = animationSpeed;
             }
         }
     }
@@ -206,6 +258,22 @@ public class GolemAI : MonoBehaviour
                 StopCoroutine("SearchForPlayer");
             }
         }
+    }
+
+    void CheckIfGamePaused()
+    {
+        
+        if (player.GetComponent<OtherPlayerFunctions>().isPaused)
+        {
+            GetComponent<NavMeshAgent>().speed = 0;
+            GetComponent<Animator>().speed = 0f;
+        }
+   
+    }
+
+    public void ResetFOV()
+    {
+        isInFov = false;
     }
 
 }
