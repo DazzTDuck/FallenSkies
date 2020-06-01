@@ -262,13 +262,11 @@ public class GolemAI : MonoBehaviour
 
     void CheckIfGamePaused()
     {
-        
         if (player.GetComponent<OtherPlayerFunctions>().isPaused)
-        {
-            GetComponent<NavMeshAgent>().speed = 0;
-            GetComponent<Animator>().speed = 0f;
+        {       
+            //GetComponent<NavMeshAgent>().speed = 0;
+            //GetComponent<Animator>().speed = 0f;
         }
-   
     }
 
     public void ResetFOV()

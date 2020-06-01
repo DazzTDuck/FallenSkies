@@ -91,6 +91,7 @@ public class OtherPlayerFunctions : MonoBehaviour
             health = 100f;
             if (checkpoint != null)
                 transform.position = checkpoint.position;
+            if(FindObjectOfType<GolemAI>())
             FindObjectOfType<GolemAI>().ResetFOV();
         }
         else
