@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class StartGamePortal : MonoBehaviour
 {
+    public int sceneIndex;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -16,8 +17,8 @@ public class StartGamePortal : MonoBehaviour
 
     IEnumerator LoadingSceneStartLevel()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(1.2f);
 
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(sceneIndex);
     }
 }

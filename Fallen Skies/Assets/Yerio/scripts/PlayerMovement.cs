@@ -167,8 +167,8 @@ public class PlayerMovement : MonoBehaviour
                     //so the faster you're walking the further you jump  
                     //also adds force like a boost jumping forward
                     float extraJump = (moveDir.z * 1f) + jumpPower;
-                    playerRb.AddForce(transform.position + transform.forward * 60 * extraJump);
-                    playerRb.velocity = new Vector3(0, jumpPower + 1, 0);
+                    playerRb.AddForce(transform.position + transform.forward * 45 * extraJump);
+                    playerRb.velocity = new Vector3(0, jumpPower, 0);
                 }
 
                 if (moveDir.z < 0)
@@ -179,7 +179,7 @@ public class PlayerMovement : MonoBehaviour
                     //also adds force like a boost jumping forward
                     float extraJump = (moveDir.z * 0.5f) + jumpPower;
                     playerRb.AddForce(transform.position - transform.forward * 40 * extraJump);
-                    playerRb.velocity = new Vector3(0, jumpPower - 1, 0);
+                    playerRb.velocity = new Vector3(0, jumpPower, 0);
                 }
 
                 if (moveDir.x > 0)
@@ -190,7 +190,7 @@ public class PlayerMovement : MonoBehaviour
                     //also adds force like a boost jumping forward
                     float extraJump = (moveDir.x * 0.5f) + jumpPower;
                     playerRb.AddForce(transform.position + transform.right * 40 * extraJump);
-                    playerRb.velocity = new Vector3(0, jumpPower - 1, 0);
+                    playerRb.velocity = new Vector3(0, jumpPower, 0);
                 }
 
                 if (moveDir.x < 0)
@@ -201,7 +201,7 @@ public class PlayerMovement : MonoBehaviour
                     //also adds force like a boost jumping forward
                     float extraJump = (moveDir.x * 0.5f) + jumpPower;
                     playerRb.AddForce(transform.position - transform.right * 40 * extraJump);
-                    playerRb.velocity = new Vector3(0, jumpPower - 1, 0);
+                    playerRb.velocity = new Vector3(0, jumpPower, 0);
                 }
             }
         }
@@ -302,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isCrouching && moveSpeed == savedMoveSpeed)
         {
-            moveSpeed /= 7;
+            moveSpeed /= 6;
         }
     }
 

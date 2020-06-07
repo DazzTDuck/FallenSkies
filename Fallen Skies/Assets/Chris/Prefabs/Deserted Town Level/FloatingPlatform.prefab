@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2766411165180661770}
   - component: {fileID: 6575047593058609724}
   - component: {fileID: 577529032694847173}
+  - component: {fileID: 2568949453913273889}
   m_Layer: 0
   m_Name: FloatingPlatform
   m_TagString: ground
@@ -80,3 +81,17 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!64 &2568949453913273889
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1170686953336758809}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -9036704864188439620, guid: 4de05dab4a79b87448b2fdbf99be02a3, type: 3}

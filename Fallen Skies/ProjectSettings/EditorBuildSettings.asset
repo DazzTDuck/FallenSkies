@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Yerio/StartingLevel.unity
     guid: cacb9a096bc2afc4db25729fa787e4eb
+  - enabled: 1
+    path: Assets/Chris/Deserted Town Level.unity
+    guid: 96e02fb949d86c54896f96ed63ebc4a0
   m_configObjects: {}

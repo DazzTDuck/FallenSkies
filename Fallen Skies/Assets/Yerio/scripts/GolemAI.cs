@@ -102,7 +102,7 @@ public class GolemAI : MonoBehaviour
     //player detection
     public static bool InFOV(Transform checkingObject, Transform target, float maxAngle, float maxRadius)
     {
-        Collider[] overlap = new Collider[100];
+        Collider[] overlap = new Collider[1000];
         int count = Physics.OverlapSphereNonAlloc(checkingObject.position, maxRadius, overlap);
 
         for (int i = 0; i < count + 1; i++)
