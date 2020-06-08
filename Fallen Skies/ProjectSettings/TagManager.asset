@@ -16,6 +16,7 @@ TagManager:
   - key
   - portalCollider
   - TeleportPoint
+  - Radio
   layers:
   - Default
   - TransparentFX

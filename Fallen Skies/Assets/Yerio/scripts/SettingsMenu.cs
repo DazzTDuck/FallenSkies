@@ -19,6 +19,9 @@ public class SettingsMenu : MonoBehaviour
     public Slider sfx;
     public Slider music;
 
+    public Slider fov;
+    public TMP_Text fovValueText;
+
     public Toggle fullscreenToggle;
 
     public TMP_Dropdown qualityDropdown;
@@ -29,6 +32,7 @@ public class SettingsMenu : MonoBehaviour
     public static float masterVolume = 1f;
     public static float sfxVolume = 1f;
     public static float musicVolume = 1f;
+    public static float fovValue = 65f;
 
     public static bool fullscreen = true;
 
@@ -62,6 +66,9 @@ public class SettingsMenu : MonoBehaviour
 
         SetFullscreen(fullscreen);
         fullscreenToggle.isOn = fullscreen;
+
+        UpdateFOVNumber(fovValue);
+        fov.value = fovValue;
     }
 
         public void GetResolutions()
@@ -78,7 +85,10 @@ public class SettingsMenu : MonoBehaviour
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + "x" + resolutions[i].height;
-            options.Add(option);
+            if (!options.Contains(option))
+            {
+                options.Add(option);
+            }       
 
             if (resolutions[i].width == Screen.currentResolution.width
                 && resolutions[i].height == Screen.currentResolution.height)
@@ -129,6 +139,13 @@ public class SettingsMenu : MonoBehaviour
     {
         Screen.fullScreen = isFullscreen;
         fullscreen = isFullscreen;
+    }
+
+    public void UpdateFOVNumber(float value)
+    {
+        fovValueText.text = value.ToString();
+        fovValue = value;
+        Camera.main.GetComponent<Camera>().fieldOfView = value;
     }
 
     public void SettingsToMenuTrigger()
@@ -184,6 +201,13 @@ public class SettingsMenu : MonoBehaviour
 
     public void LoadMainMenu()
     {
+        StartCoroutine("LoadingSceneMenu");
+    }
+
+    IEnumerator LoadingSceneMenu()
+    {
+        yield return new WaitForSeconds(1f);
+
         SceneManager.LoadScene(0);
     }
 }

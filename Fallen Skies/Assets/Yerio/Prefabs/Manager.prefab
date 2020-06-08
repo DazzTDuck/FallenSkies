@@ -51,6 +51,8 @@ MonoBehaviour:
   master: {fileID: 0}
   sfx: {fileID: 0}
   music: {fileID: 0}
+  fov: {fileID: 0}
+  fovValueText: {fileID: 0}
   fullscreenToggle: {fileID: 0}
   qualityDropdown: {fileID: 0}
 --- !u!114 &2089624192
