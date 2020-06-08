@@ -12,11 +12,10 @@ TagManager:
   - note4
   - convTrigger
   - convTrigger2
-  - convTrigger3
   - key
-  - portalCollider
   - TeleportPoint
   - Radio
+  - KeySlot
   layers:
   - Default
   - TransparentFX

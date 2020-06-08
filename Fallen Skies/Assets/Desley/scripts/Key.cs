@@ -5,18 +5,13 @@ using UnityEngine;
 public class Key : MonoBehaviour
 {
     public GameObject cam;
-    public GameObject portalEffect;
+    public GameObject portalOff;
+    public GameObject portalOn;
     public GameObject activateText;
 
     public bool hasKey;
 
     public float range;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
     // Update is called once per frame
     void Update()
@@ -31,11 +26,14 @@ public class Key : MonoBehaviour
     {
         RaycastHit hit;
         Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, range);
-        if (hit.collider.CompareTag("portalCollider"))
+        if(hit.collider.CompareTag("KeySlot"))
         {
-            portalEffect.SetActive(true);
+            portalOff.SetActive(false);
+            portalOn.SetActive(true);
             activateText.SetActive(false);
             hasKey = false;
+            this.GetComponent<PlayerMovement>().enabled = false;
+            this.GetComponent<Conversation>().LastDialogue();
         }
 
     }

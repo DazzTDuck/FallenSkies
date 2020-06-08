@@ -16,6 +16,11 @@ GameObject:
   - component: {fileID: 1962271225329523903}
   - component: {fileID: 4110857435965111477}
   - component: {fileID: 1116984429}
+  - component: {fileID: 6097360458689109479}
+  - component: {fileID: 5930168021668101439}
+  - component: {fileID: 8502923290376323566}
+  - component: {fileID: -687632210311453036}
+  - component: {fileID: -3269101451794976963}
   m_Layer: 0
   m_Name: Player Collider
   m_TagString: Player
@@ -165,3 +170,99 @@ MonoBehaviour:
   bg: {fileID: 0}
   isPaused: 0
   inSettings: 0
+  healthBar: {fileID: 0}
+--- !u!114 &6097360458689109479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330285385013786992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 905cc416281e4a84684ed2f7630b39a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lines: []
+  lines2: []
+  lines3: []
+  convStarted: 
+  index: 0
+  indexMax: 0
+  startDialogue: 0
+  dialogueEnded: 0
+  dialogueText: {fileID: 0}
+  panel: {fileID: 0}
+  audioLines: 
+--- !u!114 &5930168021668101439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330285385013786992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e05a5e24a223ef4d97e3811427c6fc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintPanel: {fileID: 0}
+  hintText: {fileID: 0}
+  lines: []
+  index: 0
+  timer: 0
+  timerReached: 0
+--- !u!114 &8502923290376323566
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330285385013786992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61e2396f1cc118f498845f0e9609618d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  theKey: {fileID: 0}
+  portalEffect: {fileID: 0}
+  activateText: {fileID: 0}
+  hasKey: 0
+  range: 0
+--- !u!114 &-687632210311453036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330285385013786992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47c9f3e0b95a0c142966dc0aafaf9b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  key: {fileID: 0}
+  location: []
+  randomizer: 0
+  spawned: 0
+--- !u!114 &-3269101451794976963
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8330285385013786992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0307811acdeb89149bf77efbb3f95702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  note: []
+  noteButton: []
+  notePanel: {fileID: 0}
+  openText: {fileID: 0}
+  noteBool: 
+  range: 0
+  notePanelOpen: 0

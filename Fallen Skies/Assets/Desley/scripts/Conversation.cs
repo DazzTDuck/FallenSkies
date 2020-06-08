@@ -17,8 +17,8 @@ public class Conversation : MonoBehaviour
     public bool startDialogue = false;
     public bool dialogueEnded = false;
 
-    public Text dialogueText;
     public GameObject panel;
+    public Text dialogueText;
 
     public string audioLines;
 
@@ -42,30 +42,26 @@ public class Conversation : MonoBehaviour
     {
         if (other.gameObject.CompareTag("convTrigger") && !convStarted[0])
         {
+            FindObjectOfType<RadioHandler>().RadioHandling();
             convStarted[0] = true;
             indexMax = 10;
             panel.SetActive(true);
             dialogueText.text = lines[0];
             startDialogue = true;
             Destroy(other.gameObject);
+            this.gameObject.GetComponent<PlayerMovement>().enabled = false;
         }
-        else if (other.gameObject.CompareTag("convTrigger") && !convStarted[1])
+       if (other.gameObject.CompareTag("convTrigger2") && !convStarted[1])
         {
+            FindObjectOfType<RadioHandler>().RadioHandling();
             convStarted[1] = true;
             indexMax = 9;
             panel.SetActive(true);
             dialogueText.text = lines2[0];
             startDialogue = true;
             Destroy(other.gameObject);
-        }
-        else if (other.gameObject.CompareTag("convTrigger") && !convStarted[2])
-        {
-            convStarted[2] = true;
-            indexMax = 8;
-            panel.SetActive(true);
-            dialogueText.text = lines3[0];
-            startDialogue = true;
-            Destroy(other.gameObject);
+            this.gameObject.GetComponent<PlayerMovement>().enabled = false;
+            this.gameObject.GetComponent<KeyRandomizer>();
         }
     }
 
@@ -86,13 +82,29 @@ public class Conversation : MonoBehaviour
         }
     }
 
+    public void LastDialogue()
+    {
+        if (!convStarted[2])
+        {
+            FindObjectOfType<RadioHandler>().RadioHandling();
+            convStarted[2] = true;
+            indexMax = 8;
+            panel.SetActive(true);
+            dialogueText.text = lines3[0];
+            startDialogue = true;
+            this.gameObject.GetComponent<PlayerMovement>().enabled = false;
+        }
+    }
+
     public void DialogueEnd()
     {
         if(index == indexMax)
         {
+            FindObjectOfType<RadioHandler>().RadioHandling();
             panel.SetActive(false);
             startDialogue = false;
             index = 0;
+            this.gameObject.GetComponent<PlayerMovement>().enabled = true;
         }
     }
 }

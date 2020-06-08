@@ -31,7 +31,7 @@ public class Hints : MonoBehaviour
             timer += Time.deltaTime;
         }
 
-        if (timer >= 10)
+        if (timer >= 3)
         {
             timerReached = true;
             timer = 0;
@@ -39,20 +39,11 @@ public class Hints : MonoBehaviour
         }
     }
 
-    public void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.CompareTag("hintTrigger"))
-        {
-            index++;
-            DisplayHint();
-            timerReached = false;
-            Destroy(other.gameObject);
-        }
-    }
-
     public void DisplayHint()
     {
+        timerReached = false;
         hintPanel.SetActive(true);
+        index += 1;
         hintText.text = lines[index];
     }
 
