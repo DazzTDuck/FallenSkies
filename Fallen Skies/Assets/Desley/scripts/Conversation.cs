@@ -43,6 +43,7 @@ public class Conversation : MonoBehaviour
         if (other.gameObject.CompareTag("convTrigger") && !convStarted[0])
         {
             FindObjectOfType<RadioHandler>().RadioHandling();
+            FindObjectOfType<AudioManager>().PlaySound("RadioOn");
             convStarted[0] = true;
             indexMax = 10;
             panel.SetActive(true);
@@ -54,6 +55,7 @@ public class Conversation : MonoBehaviour
        if (other.gameObject.CompareTag("convTrigger2") && !convStarted[1])
         {
             FindObjectOfType<RadioHandler>().RadioHandling();
+            FindObjectOfType<AudioManager>().PlaySound("RadioOn");
             convStarted[1] = true;
             indexMax = 9;
             panel.SetActive(true);
@@ -87,6 +89,7 @@ public class Conversation : MonoBehaviour
         if (!convStarted[2])
         {
             FindObjectOfType<RadioHandler>().RadioHandling();
+            FindObjectOfType<AudioManager>().PlaySound("RadioOn");
             convStarted[2] = true;
             indexMax = 8;
             panel.SetActive(true);
@@ -101,6 +104,7 @@ public class Conversation : MonoBehaviour
         if(index == indexMax)
         {
             FindObjectOfType<RadioHandler>().RadioHandling();
+            FindObjectOfType<AudioManager>().PlaySound("RadioOff");
             panel.SetActive(false);
             startDialogue = false;
             index = 0;

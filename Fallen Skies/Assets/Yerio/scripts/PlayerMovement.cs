@@ -157,7 +157,7 @@ public class PlayerMovement : MonoBehaviour
                 if (moveDir.z == 0)
                 {
                     //jump up                
-                    playerRb.velocity = (new Vector3(0, jumpPower * 1.5f, 0));
+                    playerRb.velocity = (new Vector3(0, jumpPower * 1.7f, 0));
                 }
 
                 if (moveDir.z > 0)
@@ -166,7 +166,7 @@ public class PlayerMovement : MonoBehaviour
                     //add the input to the jump calculation to determine the speed of the jump
                     //so the faster you're walking the further you jump  
                     //also adds force like a boost jumping forward
-                    float extraJump = (moveDir.z * 1f) + jumpPower;
+                    float extraJump = (moveDir.z) + jumpPower;
                     playerRb.AddForce(transform.position + transform.forward * 45 * extraJump);
                     playerRb.velocity = new Vector3(0, jumpPower, 0);
                 }
@@ -177,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
                     //add the input to the jump calculation to determine the speed of the jump
                     //so the faster you're walking the further you jump 
                     //also adds force like a boost jumping forward
-                    float extraJump = (moveDir.z * 0.5f) + jumpPower;
+                    float extraJump = (moveDir.z) + jumpPower;
                     playerRb.AddForce(transform.position - transform.forward * 40 * extraJump);
                     playerRb.velocity = new Vector3(0, jumpPower, 0);
                 }
@@ -188,9 +188,9 @@ public class PlayerMovement : MonoBehaviour
                     //add the input to the jump calculation to determine the speed of the jump
                     //so the faster you're walking the further you jump  
                     //also adds force like a boost jumping forward
-                    float extraJump = (moveDir.x * 0.5f) + jumpPower;
-                    playerRb.AddForce(transform.position + transform.right * 40 * extraJump);
-                    playerRb.velocity = new Vector3(0, jumpPower, 0);
+                    float extraJump = (moveDir.x) + jumpPower;
+                    playerRb.AddForce(transform.position + transform.right * 45);
+                    playerRb.velocity = new Vector3(0, jumpPower + 1, 0);
                 }
 
                 if (moveDir.x < 0)
@@ -199,9 +199,9 @@ public class PlayerMovement : MonoBehaviour
                     //add the input to the jump calculation to determine the speed of the jump
                     //so the faster you're walking the further you jump
                     //also adds force like a boost jumping forward
-                    float extraJump = (moveDir.x * 0.5f) + jumpPower;
-                    playerRb.AddForce(transform.position - transform.right * 40 * extraJump);
-                    playerRb.velocity = new Vector3(0, jumpPower, 0);
+                    float extraJump = (moveDir.x) + jumpPower;
+                    playerRb.AddForce(transform.position - transform.right * 45);
+                    playerRb.velocity = new Vector3(0, jumpPower + 1, 0);
                 }
             }
         }
@@ -302,7 +302,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (!isCrouching && moveSpeed == savedMoveSpeed)
         {
-            moveSpeed /= 6;
+            moveSpeed /= 5.5f;
         }
     }
 

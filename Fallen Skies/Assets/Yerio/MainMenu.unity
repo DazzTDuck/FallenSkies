@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -913,6 +913,24 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 610285057}
   m_CullTransparentMesh: 0
+--- !u!1 &701238290 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8870953615080890584, guid: 2df5b90123ffb5f428d5fc3a10ffa579,
+    type: 3}
+  m_PrefabInstance: {fileID: 8870953616088492650}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &701238291
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 701238290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 381065e2ade891c4e9a0c531e5dc09e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &936570096 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8630508699635671271, guid: 9de04394241ea9744a2d2600cadddb21,
@@ -2506,6 +2524,16 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2089624194}
+    - target: {fileID: 8630508699828266487, guid: 9de04394241ea9744a2d2600cadddb21,
+        type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2089624194}
+    - target: {fileID: 8630508699828266487, guid: 9de04394241ea9744a2d2600cadddb21,
+        type: 3}
+      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetFullscreen
+      objectReference: {fileID: 0}
     - target: {fileID: 8630508699955909314, guid: 9de04394241ea9744a2d2600cadddb21,
         type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2657,7 +2685,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 8870953616088492650}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 701238290}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d3ade1a7d52914a438e4c3fbce97f704, type: 3}

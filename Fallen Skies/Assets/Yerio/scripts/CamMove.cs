@@ -36,6 +36,7 @@ public class CamMove : MonoBehaviour
     
 
     float timer = 0;
+    float invertedTimer = 0;
 
     void Start()
     {
@@ -157,13 +158,14 @@ public class CamMove : MonoBehaviour
     {
         if (inverted)
         {
-            timer -= Time.deltaTime * speed;
+            invertedTimer -= Time.deltaTime * speed;
+            transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(invertedTimer) * amount, player.transform.position.z);
         }
         else
         {
             timer += Time.deltaTime * speed;
-        }
-        transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(timer) * amount, player.transform.position.z);
+            transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(timer) * amount, player.transform.position.z);
+        }        
 
         if (GameObject.FindGameObjectWithTag("Radio"))
         {
@@ -175,7 +177,7 @@ public class CamMove : MonoBehaviour
     void CallLanding()
     {
         if (getIfLanding)
-        {
+        {        
             HeadBobbing(landingSpeed, landingAmount, true);
         }
     }
@@ -194,7 +196,7 @@ public class CamMove : MonoBehaviour
 
     public IEnumerator Landing()
     {
-        timer = 0f;
+        invertedTimer = 0f;
         getIfLanding = true;
         
         yield return new WaitForSeconds(0.38f);

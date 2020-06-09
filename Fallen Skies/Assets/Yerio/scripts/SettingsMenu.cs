@@ -34,10 +34,10 @@ public class SettingsMenu : MonoBehaviour
     public static float musicVolume = 1f;
     public static float fovValue = 65f;
 
-    public static bool fullscreen = true;
+    public static bool fullscreen = false;
 
     public Resolution[] resolutions;
-    public static int resIndexSave;
+    public static int currentResIndex;
 
     public static int qualityIndexSave = 2;
 
@@ -47,7 +47,6 @@ public class SettingsMenu : MonoBehaviour
         animationSpeed = settingsMenu.GetComponentInChildren<AnimationUI>().AnimationSpeed;
 
         GetResolutions();
-
 
         SetMasterVolume(masterVolume);
         master.value = masterVolume;
@@ -61,8 +60,8 @@ public class SettingsMenu : MonoBehaviour
         SetQuality(qualityIndexSave);
         qualityDropdown.value = qualityIndexSave;
 
-        SetResolution(resIndexSave);
-        resolutionDropdown.value = resIndexSave;
+        SetResolution(currentResIndex);
+        resolutionDropdown.value = currentResIndex;
 
         SetFullscreen(fullscreen);
         fullscreenToggle.isOn = fullscreen;
@@ -80,14 +79,12 @@ public class SettingsMenu : MonoBehaviour
 
         List<string> options = new List<string>();
 
-        int currentResIndex = 0;
-
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + "x" + resolutions[i].height;
             if (!options.Contains(option))
             {
-                options.Add(option);
+                options.Add(option);               
             }       
 
             if (resolutions[i].width == Screen.currentResolution.width
@@ -99,7 +96,6 @@ public class SettingsMenu : MonoBehaviour
 
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResIndex;
-        resIndexSave = currentResIndex;
         resolutionDropdown.RefreshShownValue();
     }
 
@@ -107,7 +103,7 @@ public class SettingsMenu : MonoBehaviour
     {
         Resolution res = resolutions[resIndex];
         Screen.SetResolution(res.width, res.height, Screen.fullScreen);
-        resIndexSave = resIndex;
+        currentResIndex = resIndex;
     }
 
     //control the different volume sliders

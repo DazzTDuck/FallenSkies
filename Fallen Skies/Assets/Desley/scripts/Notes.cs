@@ -32,13 +32,23 @@ public class Notes : MonoBehaviour
             Readable();
         }
 
-        if (Input.GetKeyDown("n") && !notePanelOpen)
+        if (Input.GetKeyDown("n"))
         {
-            notePanel.SetActive(true);
-            notePanelOpen = true;
-            openText.SetActive(false);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            if (!notePanelOpen)
+            {
+                notePanel.SetActive(true);
+                notePanelOpen = true;
+                openText.SetActive(false);
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+            }
+            else
+            {
+                notePanel.SetActive(false);
+                notePanelOpen = false;
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+            }
         }
     }
 

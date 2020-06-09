@@ -65,3 +65,18 @@ MonoBehaviour:
     pitch: 0.94
     loop: 0
     source: {fileID: 0}
+  - name: RadioOn
+    clip: {fileID: 8300000, guid: cedf78dda3c29544b8bcef139a469481, type: 3}
+    mixer: {fileID: 2181006861063554747, guid: 9f8482e0e143c2a44b71b68c6c029d51, type: 2}
+    volume: 0.15
+    pitch: 1
+    loop: 0
+    source: {fileID: 0}
+  - name: RadioOff
+    clip: {fileID: 8300000, guid: cedf78dda3c29544b8bcef139a469481, type: 3}
+    mixer: {fileID: 2181006861063554747, guid: 9f8482e0e143c2a44b71b68c6c029d51, type: 2}
+    volume: 0.15
+    pitch: 0.47
+    loop: 0
+    source: {fileID: 0}
+  awakeBGMusic: 0
