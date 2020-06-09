@@ -80,7 +80,8 @@ public class CamMove : MonoBehaviour
 
     void GetMouseInput()
     {
-        if (!player.GetComponent<OtherPlayerFunctions>().isPaused && !pauseMenu.GetComponentInChildren<AnimationUI>().isTweening)
+        if (!player.GetComponent<OtherPlayerFunctions>().isPaused && !pauseMenu.GetComponentInChildren<AnimationUI>().isTweening 
+            && !player.GetComponent<Notes>().notePanelOpen)
         {
             currentX -= Input.GetAxis("Mouse Y") * sens;
             currentY += Input.GetAxis("Mouse X") * sens;
@@ -156,21 +157,24 @@ public class CamMove : MonoBehaviour
 
     public void HeadBobbing(float speed, float amount, bool inverted)
     {
-        if (inverted)
+        if (!player.GetComponent<Conversation>().startDialogue)
         {
-            invertedTimer -= Time.deltaTime * speed;
-            transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(invertedTimer) * amount, player.transform.position.z);
-        }
-        else
-        {
-            timer += Time.deltaTime * speed;
-            transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(timer) * amount, player.transform.position.z);
-        }        
+            if (inverted)
+            {
+                invertedTimer -= Time.deltaTime * speed;
+                transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(invertedTimer) * amount, player.transform.position.z);
+            }
+            else
+            {
+                timer += Time.deltaTime * speed;
+                transform.localPosition = new Vector3(player.transform.localPosition.x, player.transform.localPosition.y + camOffset.y + Mathf.Sin(timer) * amount, player.transform.position.z);
+            }
 
-        if (GameObject.FindGameObjectWithTag("Radio"))
-        {
-            var radio = GetComponentInChildren<RadioBobbing>();
-            radio.BobbingOnRadio();
+            if (GameObject.FindGameObjectWithTag("Radio"))
+            {
+                var radio = GetComponentInChildren<RadioBobbing>();
+                radio.BobbingOnRadio();
+            }
         }
     }
 

@@ -93,12 +93,15 @@ public class OtherPlayerFunctions : MonoBehaviour
                 transform.position = checkpoint.position;
             if(FindObjectOfType<GolemAI>())
             FindObjectOfType<GolemAI>().ResetFOV();
+
+            if (GetComponent<Key>().hasKey) { GetComponent<Key>().hasKey = false; GetComponent<KeyRandomizer>().spawned = false; }
         }
         else
         {
             health -= amount;
         }
         UpdateHealthBar();
+
     }
 
     public void SetCheckpoint(Transform refernce)
