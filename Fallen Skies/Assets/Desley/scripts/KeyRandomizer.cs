@@ -23,7 +23,7 @@ public class KeyRandomizer : MonoBehaviour
 
     public void Randomize()
     {
-        randomizer = Random.Range(0, 3);
+        randomizer = Random.Range(0, location.Length);
         spawned = false;
     }
 
