@@ -16,7 +16,7 @@ public class Key : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Fire1") && hasKey)
+        if(Input.GetButtonDown("Fire2") && hasKey)
         {
             Raycast();
         }

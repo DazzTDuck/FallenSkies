@@ -20,6 +20,8 @@ public class Conversation : MonoBehaviour
     public GameObject panel;
     public Text dialogueText;
 
+    public GameObject platform;
+
     public string audioLines;
 
     // Start is called before the first frame update
@@ -63,7 +65,8 @@ public class Conversation : MonoBehaviour
             startDialogue = true;
             Destroy(other.gameObject);
             this.gameObject.GetComponent<PlayerMovement>().enabled = false;
-            this.gameObject.GetComponent<KeyRandomizer>();
+            this.gameObject.GetComponent<KeyRandomizer>().Randomize();
+            platform.SetActive(true);
         }
     }
 

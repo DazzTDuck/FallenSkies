@@ -10,13 +10,7 @@ public class KeyRandomizer : MonoBehaviour
 
     public int randomizer;
 
-    public bool spawned = false;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        randomizer = Random.Range(0, 3);
-    }
+    public bool spawned;
 
     // Update is called once per frame
     void Update()
@@ -25,6 +19,12 @@ public class KeyRandomizer : MonoBehaviour
         {
             SpawnKey();
         }
+    }
+
+    public void Randomize()
+    {
+        randomizer = Random.Range(0, 3);
+        spawned = false;
     }
 
     public void SpawnKey()
