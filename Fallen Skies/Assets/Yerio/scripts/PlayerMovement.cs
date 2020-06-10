@@ -167,10 +167,11 @@ public class PlayerMovement : MonoBehaviour
                     //so the faster you're walking the further you jump  
                     //also adds force like a boost jumping forward
                     float extraJump = (moveDir.z) + jumpPower;
-                    playerRb.AddForce(transform.position + transform.forward * 45 * extraJump);
-                    playerRb.velocity = new Vector3(0, jumpPower, 0);
+                    playerRb.AddForce(transform.position + transform.forward * 50 * extraJump);
+                    playerRb.velocity = new Vector3(0, jumpPower * 1.2f, 0);
                 }
 
+               /*
                 if (moveDir.z < 0)
                 {
                     //jump backwards
@@ -203,6 +204,7 @@ public class PlayerMovement : MonoBehaviour
                     playerRb.AddForce(transform.position - transform.right * 45);
                     playerRb.velocity = new Vector3(0, jumpPower + 1, 0);
                 }
+                */
             }
         }
     }
