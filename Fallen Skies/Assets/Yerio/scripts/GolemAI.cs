@@ -209,10 +209,9 @@ public class GolemAI : MonoBehaviour
 
             if (playerIndex > coll.Length && !isSearching)
             {
-                if (GetComponent<NavMeshAgent>().speed != currentMoveSpeed)
-                    GetComponent<NavMeshAgent>().speed = currentMoveSpeed;
-                if (GetComponent<Animator>().speed != animationSpeed)
-                    GetComponent<Animator>().speed = animationSpeed;
+                if (GetComponent<NavMeshAgent>().speed != currentMoveSpeed) { GetComponent<NavMeshAgent>().speed = currentMoveSpeed; }              
+                if (GetComponent<Animator>().speed != animationSpeed) { GetComponent<Animator>().speed = animationSpeed; }
+                    
             }
         }
     }
@@ -235,7 +234,9 @@ public class GolemAI : MonoBehaviour
                 Debug.Log("found player again");
                 foundPlayer = true;
                 isSearching = false;
-                GetComponent<NavMeshAgent>().speed = currentMoveSpeed;
+                GetComponent<Animator>().ResetTrigger("Idle");
+                GetComponent<Animator>().SetTrigger("Walk");
+                GetComponent<NavMeshAgent>().speed = sprintSpeed;
                 StopCoroutine("SearchForPlayer");
             }
             else
@@ -246,9 +247,12 @@ public class GolemAI : MonoBehaviour
                     Debug.Log("found player again");
                     foundPlayer = true;
                     isSearching = false;
-                    GetComponent<NavMeshAgent>().speed = currentMoveSpeed;
+                    GetComponent<Animator>().ResetTrigger("Idle");
+                    GetComponent<Animator>().SetTrigger("Walk");
+                    GetComponent<NavMeshAgent>().speed = sprintSpeed;
                     StopCoroutine("SearchForPlayer");
                 }
+
                 yield return new WaitForSeconds(4.5f);
 
                 GetComponent<NavMeshAgent>().speed = currentMoveSpeed;
