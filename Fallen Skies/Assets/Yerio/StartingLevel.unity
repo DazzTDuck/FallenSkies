@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 895112178}
-  m_IndirectSpecularColor: {r: 0.1740914, g: 0.6181997, b: 1.7426807, a: 1}
+  m_IndirectSpecularColor: {r: 0.45422488, g: 0.80842125, b: 1.2871953, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3986,6 +3986,56 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.0466192, y: 0.77678776, z: 0.40728337}
   m_Center: {x: 0.45042294, y: 0, z: -0.10707131}
+--- !u!1 &1377072227 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8330285385013786992, guid: 4959dabc8f687054c8bbe94766d4608a,
+    type: 3}
+  m_PrefabInstance: {fileID: 1590005294}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1377072228
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377072227}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0307811acdeb89149bf77efbb3f95702, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cam: {fileID: 0}
+  note: []
+  noteButton: []
+  notePanel: {fileID: 0}
+  openText: {fileID: 0}
+  noteBool: 
+  range: 0
+  notePanelOpen: 0
+--- !u!114 &1377072229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1377072227}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 905cc416281e4a84684ed2f7630b39a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lines: []
+  lines2: []
+  lines3: []
+  convStarted: 
+  index: 0
+  indexMax: 0
+  startDialogue: 0
+  dialogueEnded: 0
+  panel: {fileID: 0}
+  dialogueText: {fileID: 0}
+  platform: {fileID: 0}
+  audioLines: 
 --- !u!1 &1443315442
 GameObject:
   m_ObjectHideFlags: 0
@@ -4211,7 +4261,7 @@ MonoBehaviour:
     type: 3}
   m_PrefabInstance: {fileID: 1590005294}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1377072227}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2061ae87f9910a24cb882064dcd5d5ac, type: 3}
