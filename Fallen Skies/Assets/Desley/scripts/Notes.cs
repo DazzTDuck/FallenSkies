@@ -83,6 +83,11 @@ public class Notes : MonoBehaviour
         }
     }
 
+    public void SetAllNotesNonActive()
+    {
+        
+    }
+
     public void Readable()
     {
         if (noteBool[0])

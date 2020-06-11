@@ -51,6 +51,17 @@ public class OtherPlayerFunctions : MonoBehaviour
             {
                 uiChild.OnButtonPressPlayAnimation();
             }
+
+            if (GetComponent<Notes>())
+            {
+                if (GetComponent<Notes>().notePanelOpen)
+                {
+                    FindObjectOfType<ButtonManager>().ButtonBack();
+                    GetComponent<Notes>().notePanelOpen = false;
+                    GetComponent<Notes>().notePanel.SetActive(false);
+                }
+            }
+
         }     
     }
 
